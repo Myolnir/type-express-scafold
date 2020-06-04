@@ -1,36 +1,22 @@
 import * as express from "express";
-import {Result} from "../../../../contexts/core/user/domain/Result";
-import User from "../../../../contexts/core/user/domain/User";
-import {BaseController} from "../../../shared/shared/infra/http/models/BaseController";
-import {logger} from "../../../shared/shared/logger";
 import CreateUserService from "../../../../contexts/core/user/application/CreateUserService";
+import {logger} from "../../../shared/logger";
 
-export class CreateUserController extends BaseController{
+export class CreateUserController {
 
     constructor(private readonly createUserService: CreateUserService) {
-        super();
         this.createUserService = createUserService;
     }
 
-    protected async executeImpl (req: express.Request, res: express.Response): Promise<void | any> {
+    async execute (req: express.Request, res: express.Response): Promise<void | any> {
         logger.debug("User create controller", {payload: req.body});
         try {
-            const { name, description } = req.body;
-            if (!name || ! description) {
-                logger.error("There is an error on the payload params", {payload: req.body});
-                return this.fail(res, new Error("Name and description are required"));
-            }
-            const userOnError:  Result<User> = User.createUser(name, description);
-            if (userOnError.isFailure) {
-                logger.error("There is an error validating the payload", {payload: req.body});
-                return this.fail(res, userOnError.error);
-            }
-            const user: User = userOnError.getValue();
-            const dbUser = await this.createUserService.execute(user);
-            return this.ok<any>(res, dbUser);
+            return res.status(200).json(req.body);
         } catch (err) {
             logger.error("Error",{err});
-            return this.fail(res, err.toString());
+            return res.status(500).json({
+                message: err.toString()
+            });
         }
     }
 }

@@ -1,6 +1,6 @@
 import UserRepository from "../domain/UserRepository";
 import User from "../domain/User";
-import {logger} from "../../../../api/shared/shared/logger";
+import {logger} from "../../../../api/shared/logger";
 const MongoClient = require("mongodb").MongoClient;
 
 type UserInPersistence = {

@@ -1,7 +1,3 @@
-import {Result} from "./Result";
-import { uuid } from "uuidv4";
-
-
 export default class User {
   private _id: string;
   private _name: string;
@@ -16,26 +12,6 @@ export default class User {
     this._description = description;
     this._createdAt = new Date();
   }
-
-  public static createUser(name: string, description: string): Result<User> {
-    if (!User.isValidName(name)) {
-      return Result.fail<User>("Name is not valid. Length should be between 3 and 20");
-    }
-
-    if (!User.isValidDescription(description)) {
-      return Result.fail<User>("Description length is not valid. Length should be lower or equal than 125");
-    }
-    return Result.ok<User>(new User(uuid(), name, description));
-  }
-
-  private static isValidName(name: string) {
-    return name.length >= 3 && name.length <= 20;
-  }
-
-  private static isValidDescription(description: string) {
-    return description.length <= 125;
-  }
-
 
   get id(): string {
     return this._id;
