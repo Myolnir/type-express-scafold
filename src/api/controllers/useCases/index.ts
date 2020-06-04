@@ -1,11 +1,15 @@
-import CreateUserService from "../../../contexts/core/user/application/CreateUserService";
-import {CreateUserController} from "./createUser/CreateUserController";
-import {MongoUserRepository} from "../../../contexts/core/user/infrastructure/MongoUserRepository";
-import {config} from "../../../config";
+import CreateTalkService from "../../../contexts/core/user/application/CreateTalkService";
+import {CreateTalkController} from "./createTalk/CreateTalkController";
+import InMemoryUserRepository from "../../../contexts/core/user/infrastructure/InMemoryUserRepository";
+import {GetTalkByDateService} from "../../../contexts/core/user/application/GetTalkByDateService";
+import {GetTalkByDateController} from "./getTalkByDate/GetTalkByDateController";
 
 
-const userRepository = new MongoUserRepository(config);
-const createUserService = new CreateUserService(userRepository);
-const createUserController = new CreateUserController(createUserService);
+const talkRepository = new InMemoryUserRepository();
+const createTalkService = new CreateTalkService(talkRepository);
+const createTalkController = new CreateTalkController(createTalkService);
 
-export { createUserController };
+const getTalkByDateService = new GetTalkByDateService(talkRepository);
+const getTalkByDateController = new GetTalkByDateController(getTalkByDateService);
+
+export { createTalkController, getTalkByDateController };

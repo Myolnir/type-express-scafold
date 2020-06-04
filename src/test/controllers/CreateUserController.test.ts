@@ -1,7 +1,7 @@
-import {CreateUserController} from "../../api/controllers/useCases/createUser/CreateUserController";
+import {CreateTalkController} from "../../api/controllers/useCases/createTalk/CreateTalkController";
 
 describe("CreateUserController", () => {
-   let createUserController: CreateUserController;
+   let createUserController: CreateTalkController;
 
     const mService: any = {
         execute: jest.fn().mockReturnThis()
@@ -10,7 +10,7 @@ describe("CreateUserController", () => {
 
 
     beforeEach(() => {
-        createUserController = new CreateUserController(mService);
+        createUserController = new CreateTalkController(mService);
         mService.execute.mockReset();
 
     });

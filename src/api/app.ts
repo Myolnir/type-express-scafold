@@ -5,7 +5,7 @@ import lusca from "lusca";
 
 // Controllers (route handlers)
 import * as healthController from "./controllers/health";
-import {userRouter} from "./routers/UserRouter";
+import {talkRouter} from "./routers/TalkRouter";
 
 // Create Express server
 const app = express();
@@ -20,6 +20,6 @@ app.use(lusca.xssProtection(true));
 
 // Primary app routes
 app.get("/", healthController.check);
-app.use("/user", userRouter);
+app.use("/talk", talkRouter);
 
 export default app;

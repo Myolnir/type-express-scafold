@@ -1,19 +1,21 @@
-import User from "../domain/User";
-import UserRepository from "../domain/UserRepository";
+import Talk from "../domain/Talk";
+import TalkRepository from "../domain/TalkRepository";
+import {logger} from "../../../../api/shared/logger";
 
-export default class InMemoryUserRepository implements UserRepository {
-  private users: Array<User> = [];
+export default class InMemoryUserRepository implements TalkRepository {
+  private talks: Array<Talk> = [];
 
-  async save(user: User): Promise<void> {
-    await this.delete(user.id);
-    this.users.push(user);
+  async save(talk: Talk): Promise<void> {
+    this.talks.push(talk);
+    logger.info("lista de talks", {talks: this.talks});
   }
 
-  async find(id: string): Promise<User> {
-    return this.users.find((user) => user.id === id);
+  async find(date: string): Promise<Array<Talk>> {
+    logger.info("Find repository by ", date);
+    return this.talks.filter((talk) => {
+      logger.info("dentro del filtro", talk);
+      return talk.talkDate === date;
+    });
   }
 
-  async delete(id: string): Promise<void> {
-    this.users = this.users.filter((user) => user.id !== id);
-  }
 }
