@@ -53,6 +53,10 @@ export default class User {
     return this._createdAt;
   }
 
+  set createdAt(value: Date) {
+    this._createdAt = value;
+  }
+
   get modifiedAt(): Date {
     return this._modifiedAt;
   }
@@ -60,4 +64,5 @@ export default class User {
   get deletedAt(): Date {
     return this._deletedAt;
   }
+
 }
